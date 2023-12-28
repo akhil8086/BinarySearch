@@ -58,7 +58,7 @@ const BinarySearch = () => {
                     padding: '10px',
                     border: '1px solid #ccc',
                     borderRadius: '5px',
-                    backgroundColor: index === resultIndex ? 'green' : 'inherit',
+                    backgroundColor: index === resultIndex ? 'green' : ' ',
                     marginBottom: '10px',
                   }}
                 >

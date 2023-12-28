@@ -22,12 +22,6 @@ export const binarySearchSlice = createSlice({
     setSearchTime: (state, action) => {
       state.searchTime = action.payload;
     },
-    resetSearch: (state) => {
-      state.inputArray = '';
-      state.target = '';
-      state.resultIndex = null;
-      state.searchTime = null;
-    },
   },
 });
 
@@ -36,7 +30,6 @@ export const {
   setTarget,
   setResultIndex,
   setSearchTime,
-  resetSearch,
 } = binarySearchSlice.actions;
 
 export const selectBinarySearch = (state) => state.binarySearch;
