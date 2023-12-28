@@ -1,15 +1,11 @@
 
-import { useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { resetSearch, setResultIndex, setSearchTime, selectBinarySearch } from './Redux/binarySearchSlice';
+import BinarySearchInput from './BinarySearchInput';
 
 const BinarySearch = () => {
-  const [searchValue, setSearchValue] = useState('');
-  const [selectedArray, setSelectedArray] = useState('array');
-  const [result, setResult] = useState(null);
-  const [searchTime, setSearchTime] = useState(null);
-
-  const arrays = {
-    array: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19]
-  };
+  const dispatch = useDispatch();
+  const { inputArray, target, resultIndex, searchTime } = useSelector(selectBinarySearch);
 
   const binarySearch = (arr, target) => {
     let left = 0;
@@ -19,63 +15,72 @@ const BinarySearch = () => {
       const mid = Math.floor((left + right) / 2);
 
       if (arr[mid] === target) {
-        return mid; 
+        return mid;
       } else if (arr[mid] < target) {
-        left = mid + 1; 
+        left = mid + 1;
       } else {
-        right = mid - 1; 
+        right = mid - 1;
       }
     }
 
     return -1;
   };
 
-  const handleSearch = () => {
-    const target = parseInt(searchValue, 10);
-    const selectedArr = arrays[selectedArray];
+  const handleBinarySearch = () => {
+    const inputArrayParsed = inputArray.split(',').map(item => parseInt(item.trim()));
+    const targetInt = parseInt(target);
 
-    const startTime = performance.now(); 
-    const index = binarySearch(selectedArr, target);
-    const endTime = performance.now(); 
+    const startTime = performance.now();
+    const resultIndex = binarySearch(inputArrayParsed, targetInt);
+    const endTime = performance.now();
 
-    setResult(index);
-    setSearchTime(endTime - startTime);
+    dispatch(setResultIndex(resultIndex));
+    dispatch(setSearchTime(endTime - startTime));
+  };
+
+  const handleResetSearch = () => {
+    dispatch(resetSearch());
   };
 
   return (
-    <div style={{display:"flex",justifyContent:"center",marginTop:"20px"}}>
-    <div style={{display:"flex",flexDirection:"column",border:"1px solid red",backgroundColor:"lightblue"}}>
-      <h1 style={{marginLeft:"auto",marginRight:"auto"}}>Binary Search</h1>
-      <div style={{marginTop:"10px",padding:"50px",display:"flex",flexDirection:"column"}}>
-    <div style={{border:"1px solid"}}>
-      <h4>{JSON.stringify(arrays)}</h4>
+    <div>
+      <BinarySearchInput />
+      <button onClick={handleBinarySearch} style={{ marginTop: '10px' }}>
+        Search
+      </button>
+      
+      <div style={{ marginTop: '20px' }}>
+        {resultIndex !== null ? (
+          <div>
+            <p>Search Time: {searchTime} milliseconds</p>
+            <div style={{ display: 'flex', flexWrap: 'wrap', justifyContent: 'center' }}>
+              {inputArray.split(',').map((item, index) => (
+                <div
+                  key={index}
+                  style={{
+                    margin: '0 5px',
+                    padding: '10px',
+                    border: '1px solid #ccc',
+                    borderRadius: '5px',
+                    backgroundColor: index === resultIndex ? 'green' : 'inherit',
+                    marginBottom: '10px',
+                  }}
+                >
+                  {item.trim()}
+                </div>
+              ))}
+            </div>
+          </div>
+        ) : (
+          <p>Binary Search</p>
+        )}
       </div>
-      <input
-        type="number"
-        value={searchValue}
-        style={{borderRadius:"10px",height:"30px"}}
-        onChange={(e) => setSearchValue(e.target.value)}
-        placeholder="Enter a number to search"
-      />
-      <button style={{width:"100px", margin:"10px auto", borderRadius:"8px",padding:"5px"}}
-       onClick={handleSearch}>Search</button>
-      {result !== null && (
-        <p>
-          {result !== -1
-            ? `The number ${arrays[selectedArray][result]} is found at index ${result}.`
-            : 'Number not found.'}
-        </p>
-      )}
-      {searchTime !== null && (
-        <p>Search time: {searchTime.toFixed(4)} ms</p>
-      )}
-      </div>
-     </div>
     </div>
   );
 };
 
 export default BinarySearch;
+
 
 
 
