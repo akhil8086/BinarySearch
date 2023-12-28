@@ -39,9 +39,9 @@ const BinarySearch = () => {
   };
 
   return (
-    <div>
+    <div style={{display:"flex",flexDirection:"column",alignItems:"center"}}>
       <BinarySearchInput />
-      <button onClick={handleBinarySearch} style={{ marginTop: '10px' }}>
+      <button onClick={handleBinarySearch} style={{ marginTop: '10px',}}>
         Search
       </button>
       
