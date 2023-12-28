@@ -38,10 +38,6 @@ const BinarySearch = () => {
     dispatch(setSearchTime(endTime - startTime));
   };
 
-  const handleResetSearch = () => {
-    dispatch(resetSearch());
-  };
-
   return (
     <div>
       <BinarySearchInput />
