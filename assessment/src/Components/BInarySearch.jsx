@@ -1,6 +1,6 @@
 
 import { useDispatch, useSelector } from 'react-redux';
-import { resetSearch, setResultIndex, setSearchTime, selectBinarySearch } from './Redux/binarySearchSlice';
+import { setResultIndex, setSearchTime, selectBinarySearch } from './Redux/binarySearchSlice';
 import BinarySearchInput from './BinarySearchInput';
 
 const BinarySearch = () => {
