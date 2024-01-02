@@ -1,14 +1,17 @@
 
 import { createSlice } from '@reduxjs/toolkit';
 
+const initialState = {
+  inputArray: '',
+  target: '',
+  resultIndex: null,
+  searchTime: null,
+  iterations: 0, 
+};
+
 export const binarySearchSlice = createSlice({
   name: 'binarySearch',
-  initialState: {
-    inputArray: '',
-    target: '',
-    resultIndex: null,
-    searchTime: null,
-  },
+  initialState,
   reducers: {
     setInputArray: (state, action) => {
       state.inputArray = action.payload;
@@ -22,6 +25,9 @@ export const binarySearchSlice = createSlice({
     setSearchTime: (state, action) => {
       state.searchTime = action.payload;
     },
+    setIterations: (state, action) => {
+      state.iterations = action.payload;
+    },
   },
 });
 
@@ -30,9 +36,9 @@ export const {
   setTarget,
   setResultIndex,
   setSearchTime,
+  setIterations,
 } = binarySearchSlice.actions;
 
 export const selectBinarySearch = (state) => state.binarySearch;
 
 export default binarySearchSlice.reducer;
-

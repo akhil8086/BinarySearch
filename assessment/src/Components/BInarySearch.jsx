@@ -1,21 +1,31 @@
 
 import { useDispatch, useSelector } from 'react-redux';
-import { setResultIndex, setSearchTime, selectBinarySearch } from './Redux/binarySearchSlice';
+import { setResultIndex, setSearchTime, setIterations, selectBinarySearch } from './Redux/binarySearchSlice';
 import BinarySearchInput from './BinarySearchInput';
+import BinarySearchVisualization from './BinarySearchVisualization';
 
 const BinarySearch = () => {
   const dispatch = useDispatch();
-  const { inputArray, target, resultIndex, searchTime } = useSelector(selectBinarySearch);
+  const { inputArray, target, resultIndex, searchTime, iterations } = useSelector(selectBinarySearch);
 
-  const binarySearch = (arr, target) => {
+  const binarySearch = async (arr, target) => {
     let left = 0;
     let right = arr.length - 1;
+    let iterations = 0;
+
+    const startTime = performance.now();
 
     while (left <= right) {
       const mid = Math.floor((left + right) / 2);
 
+      dispatch(setResultIndex(mid));
+      dispatch(setSearchTime(performance.now() - startTime));
+      iterations++;
+
+      await new Promise((resolve) => setTimeout(resolve, 500));
+
       if (arr[mid] === target) {
-        return mid;
+        return { index: mid, iterations };
       } else if (arr[mid] < target) {
         left = mid + 1;
       } else {
@@ -23,61 +33,38 @@ const BinarySearch = () => {
       }
     }
 
-    return -1;
+    return { index: -1, iterations };
   };
 
-  const handleBinarySearch = () => {
-    const inputArrayParsed = inputArray.split(',').map(item => parseInt(item.trim()));
+  const handleBinarySearch = async () => {
+    const inputArrayParsed = inputArray.split(',').map((item) => parseInt(item.trim()));
     const targetInt = parseInt(target);
 
     const startTime = performance.now();
-    const resultIndex = binarySearch(inputArrayParsed, targetInt);
+
+    const { index, iterations } = await binarySearch(inputArrayParsed, targetInt);
     const endTime = performance.now();
 
-    dispatch(setResultIndex(resultIndex));
+    dispatch(setResultIndex(index));
     dispatch(setSearchTime(endTime - startTime));
+    dispatch(setIterations(iterations));
   };
 
   return (
-    <div style={{display:"flex",flexDirection:"column",alignItems:"center"}}>
+    <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
       <BinarySearchInput />
-      <button onClick={handleBinarySearch} style={{ marginTop: '10px',}}>
+      <button onClick={handleBinarySearch} style={{ marginTop: '10px' }}>
         Search
       </button>
-      
+
       <div style={{ marginTop: '20px' }}>
-        {resultIndex !== null ? (
-          <div>
-            <p>Search Time: {searchTime} milliseconds</p>
-            <div style={{ display: 'flex', flexWrap: 'wrap', justifyContent: 'center' }}>
-              {inputArray.split(',').map((item, index) => (
-                <div
-                  key={index}
-                  style={{
-                    margin: '0 5px',
-                    padding: '10px',
-                    border: '1px solid #ccc',
-                    borderRadius: '5px',
-                    backgroundColor: index === resultIndex ? 'green' : ' ',
-                    marginBottom: '10px',
-                  }}
-                >
-                  {item.trim()}
-                </div>
-              ))}
-            </div>
-          </div>
-        ) : (
-          <p>Binary Search</p>
-        )}
+        <BinarySearchVisualization inputArray={inputArray} resultIndex={resultIndex} searchTime={searchTime} iterations={iterations} />
       </div>
     </div>
   );
 };
 
 export default BinarySearch;
-
-
 
 
 
