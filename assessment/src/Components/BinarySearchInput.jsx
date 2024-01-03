@@ -10,7 +10,7 @@ const BinarySearchInput = () => {
     <div style={{ marginTop:"30px" }}>
       <div>
       <label>
-        <div style={{marginLeft:"60px", color:"red"}}>
+        <div style={{marginLeft:"60px", color:"red",marginBottom:"10px"}}>
         Enter Array : 
         </div>
         <textarea
@@ -25,7 +25,7 @@ const BinarySearchInput = () => {
       <br />
       <div >
       <label>
-        <div style={{marginLeft:"30px", color:"red"}}>
+        <div style={{marginLeft:"30px", color:"red", marginBottom:"10px"}}>
         Enter Target Element:
         </div>
         <input
