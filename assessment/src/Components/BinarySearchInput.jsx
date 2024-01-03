@@ -7,27 +7,35 @@ const BinarySearchInput = () => {
   const { inputArray, target } = useSelector(selectBinarySearch);
 
   return (
-    <div style={{ textAlign: 'center', margin: '20px' }}>
-      <label style={{ marginRight: '10px' }}>
-        Enter array:
-        <input
+    <div style={{ marginTop:"30px" }}>
+      <div>
+      <label>
+        <div style={{marginLeft:"60px", color:"red"}}>
+        Enter Array : 
+        </div>
+        <textarea
           type="text"
           value={inputArray}
           onChange={(e) => dispatch(setInputArray(e.target.value))}
           placeholder="array"
-          style={{ marginBottom: '10px' }}
+          style={{ width:"200px", height:"100px",border:"2px solid lightblue" }}
         />
       </label>
+      </div>
       <br />
+      <div >
       <label>
-        Enter target element:
+        <div style={{marginLeft:"30px", color:"red"}}>
+        Enter Target Element:
+        </div>
         <input
           type="text"
           value={target}
           onChange={(e) => dispatch(setTarget(e.target.value))}
-          style={{ marginBottom: '10px' }}
+          style={{ width:"200px" , border:"2px solid lightblue" }}
         />
       </label>
+      </div>
     </div>
   );
 };

@@ -6,10 +6,12 @@ const BinarySearchVisualization = ({ inputArray, resultIndex, searchTime, iterat
           <div>
             {resultIndex !== -1 ? (
               <div>
-                <p>Search Time: {searchTime} milliseconds</p>
+                <div style={{display:"flex",flexDirection:"column",width:"50%",border:"1px solid black",margin:"auto",alignItems:"center",backgroundColor:"lightgrey"}}>
+                <p>Search Time: {searchTime.toFixed(2)} milliseconds</p>
                 <p>Iterations: {iterations}</p>
                 <p>Search Index: {resultIndex}</p>
-                <div style={{ display: 'flex', flexWrap: 'wrap', justifyContent: 'center' }}>
+                </div>
+                <div style={{ display: 'flex', flexWrap: 'wrap', justifyContent: 'center',marginTop:"10px" }}>
                   {inputArray.split(',').map((item, index) => (
                     <div
                       key={index}
@@ -40,3 +42,5 @@ const BinarySearchVisualization = ({ inputArray, resultIndex, searchTime, iterat
   
   export default BinarySearchVisualization;
   
+
+
